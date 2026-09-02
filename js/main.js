@@ -14,4 +14,19 @@ document.addEventListener('DOMContentLoaded', () => {
   if (yearEl) {
     yearEl.textContent = new Date().getFullYear();
   }
+
+  // Lead/collab forms: no backend wired up yet, so just confirm submission
+  // client-side. Swap this for a real integration (Netlify Forms, Formspree,
+  // etc.) before launch.
+  document.querySelectorAll('.lead-form').forEach((form) => {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      form.classList.add('submitted');
+      const successEl = document.getElementById(`${form.id.replace('-form', '')}-success`);
+      if (successEl) {
+        successEl.classList.add('visible');
+        successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+  });
 });

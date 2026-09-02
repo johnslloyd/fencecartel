@@ -1,0 +1,9 @@
+.git
+.claude
+.gitignore
+.DS_Store
+README.md
+docker-compose.yml
+*.log
+node_modules
+f6DcB2U2m7m7XxTznEoLKDigvLY.avif

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Get a Quote | Fence Cartel</title>
+  <meta name="description" content="Request a fence, gate, or staining quote from Fence Cartel." />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="images/favicon.png" />
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Anton&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css?v=28" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">Fence&nbsp;Cartel</a>
+
+      <nav class="main-nav" id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="work.html">The Work</a>
+        <a href="collab.html">Collab</a>
+        <a href="quote.html" class="active">Get a Quote</a>
+      </nav>
+
+      <a href="quote.html" class="btn btn-primary header-cta">Get a Quote</a>
+
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-header">
+      <div class="container">
+        <h1>Get a Fence Quote</h1>
+        <p>Tell us a bit about your project and we'll follow up with a quote.</p>
+      </div>
+    </section>
+
+    <section class="form-section">
+      <div class="container">
+        <div class="form-success" id="quote-success">Thanks &mdash; we've got your project details and will be in touch soon.</div>
+        <form class="lead-form" id="quote-form" data-netlify="true" name="quote">
+          <input type="hidden" name="form-name" value="quote" />
+          <div class="form-fields">
+            <div class="form-row">
+              <label for="quote-name">Name</label>
+              <input type="text" id="quote-name" name="name" required />
+            </div>
+            <div class="form-row">
+              <label for="quote-email">Email</label>
+              <input type="email" id="quote-email" name="email" required />
+            </div>
+            <div class="form-row">
+              <label for="quote-phone">Phone</label>
+              <input type="tel" id="quote-phone" name="phone" />
+            </div>
+            <div class="form-row">
+              <label for="quote-location">City / Zip</label>
+              <input type="text" id="quote-location" name="location" />
+            </div>
+            <div class="form-row">
+              <label for="quote-project">Project Type</label>
+              <select id="quote-project" name="project-type">
+                <option>New fence</option>
+                <option>Gate</option>
+                <option>Staining</option>
+                <option>Repair</option>
+                <option>Not sure yet</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label for="quote-details">Project Details</label>
+              <textarea id="quote-details" name="details" placeholder="Rough size, material, timeline &mdash; anything helpful."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg" style="width:100%;">Request Quote</button>
+          </div>
+        </form>
+        <p class="form-note">This form isn't connected to email yet &mdash; wiring it up to Netlify Forms, Formspree, or similar is a next step before launch.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <img src="images/logo-full-patch.png" alt="Fence Cartel" class="footer-logo-mark" />
+      <div class="footer-inner">
+      <div>
+        <p>Jesse Lloyd &middot; Olive Branch, MS</p>
+      </div>
+      <div class="footer-links">
+        <a href="work.html">The Work</a>
+        <a href="collab.html">Collab</a>
+        <a href="quote.html">Get a Quote</a>
+      </div>
+      <div class="footer-links">
+        <a href="https://www.youtube.com/@fenceguy689" target="_blank" rel="noopener">YouTube: @fenceguy689</a>
+        <a href="https://www.instagram.com/jlloyd82/" target="_blank" rel="noopener">Instagram: @jlloyd82</a>
+        <a href="https://www.tiktok.com/@fenceguy8" target="_blank" rel="noopener">TikTok: @fenceguy8</a>
+      </div>
+      </div>
+      <p class="footer-copy">&copy; <span id="year"></span> Fence Cartel. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

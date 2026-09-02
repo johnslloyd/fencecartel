@@ -1,0 +1,7 @@
+services:
+  web:
+    build: .
+    container_name: fence-cartel
+    restart: unless-stopped
+    ports:
+      - "8080:80"
