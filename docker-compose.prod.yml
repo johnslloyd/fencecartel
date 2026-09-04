@@ -1,0 +1,17 @@
+services:
+  web:
+    image: ghcr.io/johnslloyd/fencecartel:latest
+    container_name: fence-cartel
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+
+  # Watches the running "web" container and swaps in a new image the moment
+  # GitHub Actions publishes one — no manual redeploy step needed.
+  watchtower:
+    image: containrrr/watchtower
+    container_name: fence-cartel-watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 60 --cleanup fence-cartel
