@@ -2,9 +2,10 @@ FROM nginx:alpine
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-COPY index.html work.html collab.html quote.html /usr/share/nginx/html/
-COPY css /usr/share/nginx/html/css
-COPY js /usr/share/nginx/html/js
-COPY images /usr/share/nginx/html/images
+# Copy everything else in the repo (minus what .dockerignore excludes) as
+# static site content. This avoids the old approach of listing every
+# top-level file/folder by hand, which silently misses new pages/sections
+# (that's exactly how the landing/ folder went missing from a deploy).
+COPY . /usr/share/nginx/html/
 
 EXPOSE 80

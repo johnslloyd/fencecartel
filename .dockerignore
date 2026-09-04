@@ -4,6 +4,9 @@
 .DS_Store
 README.md
 docker-compose.yml
+Dockerfile
+.dockerignore
 *.log
+*.md
 node_modules
 f6DcB2U2m7m7XxTznEoLKDigvLY.avif
