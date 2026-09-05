@@ -329,6 +329,19 @@ p { margin: 0 0 1em; color: var(--color-text-muted); }
   text-align: center;
 }
 .form-success.visible { display: block; }
+.form-error {
+  display: none;
+  background: rgba(200, 60, 40, 0.12);
+  border: 1px solid #c83c28;
+  color: var(--color-text);
+  padding: 16px;
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+  font-weight: 600;
+  text-align: center;
+}
+.form-error.visible { display: block; }
+.form-error a { color: inherit; text-decoration: underline; }
 .lead-form.submitted .form-fields { display: none; }
 
 /* ---------- Media kit stats ---------- */

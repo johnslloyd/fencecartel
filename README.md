@@ -78,10 +78,19 @@ Easiest paths: put [Caddy](https://caddyserver.com/) in front (automatic Let's E
 with a two-line Caddyfile), or run `certbot` against nginx directly if you're doing the
 reverse-proxy-per-site setup.
 
-**Forms:** `quote.html` and `collab.html` currently only fake a success message
-client-side — nothing is actually sent anywhere yet. Before relying on them for real leads,
-wire them to a form backend (e.g. [Formspree](https://formspree.io/)) since this is a static
-container with no server-side code to receive submissions.
+**Forms:** `quote.html` and `collab.html` submit via [Web3Forms](https://web3forms.com/)
+(a hosted form backend — needed because this is a static container with no server-side code
+to receive submissions). Both forms email straight to `Lloyd08@aol.com`. To activate:
+
+1. Go to [web3forms.com](https://web3forms.com/) and enter `Lloyd08@aol.com` to get a free
+   access key emailed to that inbox.
+2. Paste the key into `WEB3FORMS_ACCESS_KEY` near the top of the form-handling block in
+   [js/main.js](js/main.js).
+3. Redeploy.
+
+Both forms also carry a hidden honeypot field (`botcheck`) — real visitors never see or fill
+it, so any submission with it checked is silently dropped client-side before it reaches
+Web3Forms, which filters it server-side too if it ever gets through.
 
 ## Known placeholders
 

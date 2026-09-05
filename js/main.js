@@ -15,17 +15,65 @@ document.addEventListener('DOMContentLoaded', () => {
     yearEl.textContent = new Date().getFullYear();
   }
 
-  // Lead/collab forms: no backend wired up yet, so just confirm submission
-  // client-side. Swap this for a real integration (Netlify Forms, Formspree,
-  // etc.) before launch.
+  // Lead/collab forms -> Web3Forms (https://web3forms.com), which emails
+  // submissions straight to Lloyd08@aol.com. Get a free access key by
+  // entering that email at web3forms.com, then paste it in below.
+  const WEB3FORMS_ACCESS_KEY = 'PASTE_YOUR_WEB3FORMS_ACCESS_KEY_HERE';
+
   document.querySelectorAll('.lead-form').forEach((form) => {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      form.classList.add('submitted');
-      const successEl = document.getElementById(`${form.id.replace('-form', '')}-success`);
-      if (successEl) {
-        successEl.classList.add('visible');
-        successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      // Honeypot: real visitors never see this field. If it's checked,
+      // something filled it in automatically -- drop the submission
+      // instead of sending it.
+      const honeypot = form.querySelector('input[name="botcheck"]');
+      if (honeypot && honeypot.checked) {
+        form.reset();
+        return;
+      }
+
+      const base = form.id.replace('-form', '');
+      const successEl = document.getElementById(`${base}-success`);
+      const errorEl = document.getElementById(`${base}-error`);
+      const submitBtn = form.querySelector('button[type="submit"]');
+
+      if (errorEl) errorEl.classList.remove('visible');
+      if (submitBtn) {
+        submitBtn.dataset.originalText = submitBtn.dataset.originalText || submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+      }
+
+      const data = Object.fromEntries(new FormData(form));
+      data.access_key = WEB3FORMS_ACCESS_KEY;
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const result = await res.json();
+
+        if (!result.success) throw new Error(result.message || 'Submission failed');
+
+        form.classList.add('submitted');
+        form.reset();
+        if (successEl) {
+          successEl.classList.add('visible');
+          successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } catch (err) {
+        console.error('Form submission failed:', err);
+        if (errorEl) {
+          errorEl.classList.add('visible');
+          errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = submitBtn.dataset.originalText;
+        }
       }
     });
   });
