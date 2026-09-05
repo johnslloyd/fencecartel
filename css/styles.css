@@ -180,7 +180,7 @@ p { margin: 0 0 1em; color: var(--color-text-muted); }
   justify-content: center;
 }
 .hero h1 {
-  font-size: clamp(2.24rem, 6.3vw, 3.15rem);
+  font-size: clamp(3.2rem, 9vw, 4.5rem);
   margin: 0 0 0.18em;
   /* Keeps clear of the absolutely-positioned .hero-stamp logo (anchored
      72px + ~179px wide from hero-inner's right edge, plus a buffer) --
