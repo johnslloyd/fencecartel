@@ -159,9 +159,9 @@ p { margin: 0 0 1em; color: var(--color-text-muted); }
   position: absolute;
   z-index: 2;
   top: -35px;
-  right: -30px;
+  right: 72px;
 }
-.hero-stamp img { height: 272px; width: auto; filter: drop-shadow(2px 6px 10px rgba(0, 0, 0, 0.6)); }
+.hero-stamp img { height: 299px; width: auto; filter: drop-shadow(2px 6px 10px rgba(0, 0, 0, 0.6)); }
 .hero-inner {
   position: relative;
   z-index: 2;
@@ -489,7 +489,7 @@ p { margin: 0 0 1em; color: var(--color-text-muted); }
   .stat-bar { justify-content: flex-start; }
   .stat-bar .stat { text-align: left; }
   .hero-stamp { position: static; display: flex; justify-content: center; margin: 0 0 16px; }
-  .hero-stamp img { height: 176px; }
+  .hero-stamp img { height: 194px; }
 }
 
 @media (max-width: 720px) {
