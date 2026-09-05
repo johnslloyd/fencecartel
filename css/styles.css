@@ -160,11 +160,13 @@ p { margin: 0 0 1em; color: var(--color-text-muted); }
   z-index: 2;
   /* hero-inner now stretches to the full height of .hero (see .hero's
      align-items: stretch), so centering relative to hero-inner is the
-     same as centering within the whole hero area. Dead-center (top:50%)
-     puts the logo's bottom edge into the stat-bar row, since both this
-     and the text block are centered on the same axis and share the
-     right-hand column -- nudged up just enough to clear it. */
-  top: calc(50% - 96px);
+     same as centering within the whole hero area. Tuned (via measuring
+     both elements' rendered positions at 1600px) so the logo's top edge
+     lines up with the headline's top edge -- since the headline's own
+     height varies slightly by breakpoint (line-wrap differences), this
+     is exact at that reference width and close at others, not a formula
+     that's guaranteed pixel-identical everywhere. */
+  top: calc(50% - 25.5px);
   transform: translateY(-50%);
   right: 72px;
 }
@@ -192,7 +194,7 @@ p { margin: 0 0 1em; color: var(--color-text-muted); }
   right: 24px;
 }
 .hero h1 {
-  font-size: clamp(3.2rem, 9vw, 4.5rem);
+  font-size: clamp(3.04rem, 8.55vw, 4.275rem);
   margin: 0 0 0.18em;
   /* Keeps clear of the absolutely-positioned .hero-stamp logo (anchored
      72px + ~179px wide from hero-inner's right edge, plus a buffer) --
