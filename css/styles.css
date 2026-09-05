@@ -175,9 +175,21 @@ p { margin: 0 0 1em; color: var(--color-text-muted); }
   max-width: 1080px;
   margin: 0 auto;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+}
+.hero-content {
+  /* Pinned to the exact same top-edge formula as .hero-stamp (50% of
+     hero-inner's full-stretched height, minus the stamp's own nudge and
+     half-height -- see .hero-stamp) so the headline's top edge lines up
+     with the logo's top edge by construction, not by eyeballing it. */
+  position: absolute;
+  top: calc(50% - 245.5px);
+  /* Absolute offsets resolve against hero-inner's padding edge, not its
+     content edge -- 0/0 here would ignore .container's own 24px padding
+     and widen this box by 24px on each side versus normal-flow content,
+     which shifted the stat-bar (and its horizontal alignment with the
+     logo) by exactly that much. Match the container's padding instead. */
+  left: 24px;
+  right: 24px;
 }
 .hero h1 {
   font-size: clamp(3.2rem, 9vw, 4.5rem);
@@ -501,7 +513,7 @@ p { margin: 0 0 1em; color: var(--color-text-muted); }
      height (see the base .hero/.hero-inner rules) -- keep mobile's
      original bottom-anchored, normal-flow stacking instead. */
   .hero { min-height: 560px; padding-bottom: 40px; align-items: flex-end; }
-  .hero-inner { display: block; }
+  .hero-content { position: static; }
   .hero-meta-row { flex-direction: column; align-items: flex-start; }
   .hero-copy { max-width: none; }
   .hero-actions { justify-content: flex-start; }
