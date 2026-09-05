@@ -177,12 +177,12 @@ p { margin: 0 0 1em; color: var(--color-text-muted); }
   width: 100%;
 }
 .hero-content {
-  /* Pinned to the exact same top-edge formula as .hero-stamp (50% of
-     hero-inner's full-stretched height, minus the stamp's own nudge and
-     half-height -- see .hero-stamp) so the headline's top edge lines up
-     with the logo's top edge by construction, not by eyeballing it. */
+  /* Centered on hero-inner's full-stretched height, then nudged down a
+     bit past dead-center per feedback (previously top-aligned with
+     .hero-stamp -- see git history for that formula). */
   position: absolute;
-  top: calc(50% - 245.5px);
+  top: calc(50% + 40px);
+  transform: translateY(-50%);
   /* Absolute offsets resolve against hero-inner's padding edge, not its
      content edge -- 0/0 here would ignore .container's own 24px padding
      and widen this box by 24px on each side versus normal-flow content,
@@ -209,7 +209,7 @@ p { margin: 0 0 1em; color: var(--color-text-muted); }
   margin-bottom: 1.6em;
   color: #d4d4d8;
 }
-.hero-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 4px; }
+.hero-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 4px; margin-top: 72px; }
 
 /* ---------- Stat bar ---------- */
 .stat-bar { display: flex; gap: 28px; flex-wrap: wrap; }
@@ -513,10 +513,10 @@ p { margin: 0 0 1em; color: var(--color-text-muted); }
      height (see the base .hero/.hero-inner rules) -- keep mobile's
      original bottom-anchored, normal-flow stacking instead. */
   .hero { min-height: 560px; padding-bottom: 40px; align-items: flex-end; }
-  .hero-content { position: static; }
+  .hero-content { position: static; transform: none; }
   .hero-meta-row { flex-direction: column; align-items: flex-start; }
   .hero-copy { max-width: none; }
-  .hero-actions { justify-content: flex-start; }
+  .hero-actions { justify-content: flex-start; margin-top: 0; }
   .stat-bar { justify-content: flex-start; }
   .stat-bar .stat { text-align: left; }
   .hero-stamp { position: static; display: flex; justify-content: flex-start; margin: 0 0 16px; transform: none; }
