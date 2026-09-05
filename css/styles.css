@@ -158,7 +158,10 @@ p { margin: 0 0 1em; color: var(--color-text-muted); }
 .hero-stamp {
   position: absolute;
   z-index: 2;
-  top: -35px;
+  /* Anchored to hero-inner's bottom (which tracks the stat-bar row) rather
+     than its top, so the logo stays clear of the stats regardless of how
+     tall the headline above it renders at a given viewport/font-size. */
+  bottom: 100px;
   right: 72px;
 }
 .hero-stamp img { height: 299px; width: auto; filter: drop-shadow(2px 6px 10px rgba(0, 0, 0, 0.6)); }
@@ -170,8 +173,13 @@ p { margin: 0 0 1em; color: var(--color-text-muted); }
   width: 100%;
 }
 .hero h1 {
-  font-size: clamp(3.2rem, 9vw, 6.5rem);
+  font-size: clamp(2.24rem, 6.3vw, 3.15rem);
   margin: 0 0 0.18em;
+  /* Keeps clear of the absolutely-positioned .hero-stamp logo (anchored
+     72px + ~179px wide from hero-inner's right edge, plus a buffer) --
+     expressed relative to this container so the gap holds as hero-inner
+     itself narrows below its 1080px cap, not just at the widest screens. */
+  max-width: calc(100% - 260px);
 }
 .hero h1 .accent { color: var(--color-accent); }
 .hero-meta-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
@@ -490,10 +498,10 @@ p { margin: 0 0 1em; color: var(--color-text-muted); }
   .stat-bar .stat { text-align: left; }
   .hero-stamp { position: static; display: flex; justify-content: flex-start; margin: 0 0 16px; }
   .hero-stamp img { height: 194px; }
-  /* The stamp logo already spells out "Fence Cartel", and so does the
-     header wordmark right above it -- a third big "FENCE CARTEL." headline
-     stacked between them reads as repetitive at this width, so drop it. */
-  .hero h1 { display: none; }
+  /* The new headline is longer than the old "Fence / Cartel." wordmark --
+     at the desktop clamp size it wraps to 5 lines here and buries the CTA
+     buttons far down the page, so scale it back at this width. */
+  .hero h1 { font-size: clamp(2.2rem, 7vw, 3.2rem); max-width: none; }
 }
 
 @media (max-width: 720px) {
