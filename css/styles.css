@@ -488,8 +488,12 @@ p { margin: 0 0 1em; color: var(--color-text-muted); }
   .hero-actions { justify-content: flex-start; }
   .stat-bar { justify-content: flex-start; }
   .stat-bar .stat { text-align: left; }
-  .hero-stamp { position: static; display: flex; justify-content: center; margin: 0 0 16px; }
+  .hero-stamp { position: static; display: flex; justify-content: flex-start; margin: 0 0 16px; }
   .hero-stamp img { height: 194px; }
+  /* The stamp logo already spells out "Fence Cartel", and so does the
+     header wordmark right above it -- a third big "FENCE CARTEL." headline
+     stacked between them reads as repetitive at this width, so drop it. */
+  .hero h1 { display: none; }
 }
 
 @media (max-width: 720px) {
