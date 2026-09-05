@@ -137,7 +137,7 @@ p { margin: 0 0 1em; color: var(--color-text-muted); }
   width: 100%;
   min-height: 640px;
   display: flex;
-  align-items: flex-end;
+  align-items: stretch;
   padding: 0 0 56px;
   overflow: hidden;
   border-bottom: 1px solid var(--color-border);
@@ -158,10 +158,14 @@ p { margin: 0 0 1em; color: var(--color-text-muted); }
 .hero-stamp {
   position: absolute;
   z-index: 2;
-  /* Anchored to hero-inner's bottom (which tracks the stat-bar row) rather
-     than its top, so the logo stays clear of the stats regardless of how
-     tall the headline above it renders at a given viewport/font-size. */
-  bottom: 100px;
+  /* hero-inner now stretches to the full height of .hero (see .hero's
+     align-items: stretch), so centering relative to hero-inner is the
+     same as centering within the whole hero area. Dead-center (top:50%)
+     puts the logo's bottom edge into the stat-bar row, since both this
+     and the text block are centered on the same axis and share the
+     right-hand column -- nudged up just enough to clear it. */
+  top: calc(50% - 96px);
+  transform: translateY(-50%);
   right: 72px;
 }
 .hero-stamp img { height: 299px; width: auto; filter: drop-shadow(2px 6px 10px rgba(0, 0, 0, 0.6)); }
@@ -171,6 +175,9 @@ p { margin: 0 0 1em; color: var(--color-text-muted); }
   max-width: 1080px;
   margin: 0 auto;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .hero h1 {
   font-size: clamp(2.24rem, 6.3vw, 3.15rem);
@@ -490,13 +497,17 @@ p { margin: 0 0 1em; color: var(--color-text-muted); }
 }
 
 @media (max-width: 900px) {
-  .hero { min-height: 560px; padding-bottom: 40px; }
+  /* Desktop centers hero-inner's content vertically within the full hero
+     height (see the base .hero/.hero-inner rules) -- keep mobile's
+     original bottom-anchored, normal-flow stacking instead. */
+  .hero { min-height: 560px; padding-bottom: 40px; align-items: flex-end; }
+  .hero-inner { display: block; }
   .hero-meta-row { flex-direction: column; align-items: flex-start; }
   .hero-copy { max-width: none; }
   .hero-actions { justify-content: flex-start; }
   .stat-bar { justify-content: flex-start; }
   .stat-bar .stat { text-align: left; }
-  .hero-stamp { position: static; display: flex; justify-content: flex-start; margin: 0 0 16px; }
+  .hero-stamp { position: static; display: flex; justify-content: flex-start; margin: 0 0 16px; transform: none; }
   .hero-stamp img { height: 194px; }
   /* The new headline is longer than the old "Fence / Cartel." wordmark --
      at the desktop clamp size it wraps to 5 lines here and buries the CTA
