@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Lead/collab forms -> Web3Forms (https://web3forms.com), which emails
   // submissions straight to Lloyd08@aol.com. Get a free access key by
   // entering that email at web3forms.com, then paste it in below.
-  const WEB3FORMS_ACCESS_KEY = 'PASTE_YOUR_WEB3FORMS_ACCESS_KEY_HERE';
+  const WEB3FORMS_ACCESS_KEY = '9eb184f9-1098-4598-b06b-e1713e9b0cfa';
 
   document.querySelectorAll('.lead-form').forEach((form) => {
     form.addEventListener('submit', async (e) => {
