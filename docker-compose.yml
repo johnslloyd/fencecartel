@@ -1,6 +1,6 @@
 services:
   web:
-    build: .
+    image: ghcr.io/johnslloyd/fencecartel:latest
     container_name: fence-cartel
     restart: unless-stopped
     ports:

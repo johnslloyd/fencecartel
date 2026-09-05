@@ -1,0 +1,31 @@
+name: Build and push image
+
+# Builds the site's Docker image and publishes it to GHCR on every push to
+# master. Hostinger's Docker Manager pulls ghcr.io/johnslloyd/fencecartel:latest
+# on each manual "Deploy" click -- see docker-compose.yml.
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/fencecartel:latest

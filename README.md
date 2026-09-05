@@ -31,42 +31,37 @@ python3 -m http.server 8000
 
 If you edit `css/styles.css`, bump the `?v=N` query string on the stylesheet `<link>` in all four HTML files — the plain `http.server` doesn't send cache headers, so browsers can aggressively cache the old CSS otherwise.
 
-## Deployment (Docker on a VPS) — auto-deploys on every push
+## Deployment (Docker on Hostinger, via GHCR)
 
-Once set up, this requires **no terminal and no manual redeploy step, ever.** Pushing to
-`master` (or asking Claude Code to do it) is the entire deploy process:
+This site is hosted on a Hostinger VPS using Hostinger's "compose from Git URL" Docker
+Manager — it reads `docker-compose.yml` straight from this repo and lets you redeploy with a
+button in its panel (no SSH needed day-to-day).
 
-1. GitHub Actions (`.github/workflows/build-and-push.yml`) builds a fresh Docker image and
-   publishes it to `ghcr.io/johnslloyd/fencecartel:latest` on every push to `master`.
-2. A small `watchtower` container running alongside the site on the VPS checks that image
-   once a minute. The moment a new one shows up, it pulls it and restarts the site
-   automatically — no button, no SSH session, no compose command.
+**The workflow:**
 
-**One-time setup, on the VPS:**
+1. Push to `master`. GitHub Actions (`.github/workflows/build-and-push.yml`) builds the
+   image and publishes it to `ghcr.io/johnslloyd/fencecartel:latest`.
+2. Click **Deploy** on the `fence-cartel` container in Hostinger's Docker Manager. It pulls
+   the fresh `:latest` image and recreates the container with it.
 
-```bash
-git clone git@github.com:johnslloyd/fencecartel.git
-cd fencecartel
-docker compose -f docker-compose.prod.yml up -d
-```
-
-That's the last terminal command this project should ever need. From then on, adding
-content and pushing it is the whole workflow — the live site catches up within about a
-minute on its own.
+**Why `docker-compose.yml` uses `image:` and not `build: .`:** it used to build locally
+(`build: .`), which seemed simpler, but Hostinger's Deploy button doesn't actually rebuild
+that way — diagnosed directly on the VPS (`.build.log` showed `Pulling project images` →
+`web Skipped — No image to be pulled` → straight to `Recreate`, i.e. no build step ever ran).
+For a `build:`-based service, Deploy just recreates the container from whatever image
+already happens to exist locally, so pushes to GitHub never actually reached the running
+site no matter how many times Deploy was clicked. Pointing at a registry image instead gives
+Deploy something real to pull each time — the same pattern already working for the other
+apps on this host (e.g. `mapmyfence`, which also deploys via `image: ghcr.io/...:latest`).
 
 **First-time-only extra step:** GitHub Container Registry packages built by Actions default
 to *private*, even in a public repo. After the first push, go to the package's page on
 GitHub (`github.com/johnslloyd?tab=packages`) → the `fencecartel` package → **Package
-settings** → change visibility to **Public**. Otherwise Watchtower can't pull it. This is a
-few clicks in a browser, not a terminal step.
+settings** → change visibility to **Public**. Otherwise Hostinger can't pull it. This is a
+few clicks in a browser, not a terminal step. (If it's already set to Public from an earlier
+attempt at this, nothing to do.)
 
-**`docker-compose.yml` vs `docker-compose.prod.yml`:** the plain `docker-compose.yml`
-(`build: .`) is for local development/testing only — it builds the image from whatever's on
-disk. `docker-compose.prod.yml` is what the VPS actually runs — it pulls the pre-built image
-from the registry and pairs it with Watchtower. Don't run both on the same machine at once
-(same container name/port).
-
-**Port mapping** — both compose files map host `8080` → container `80`, on the assumption
+**Port mapping** — `docker-compose.yml` maps host `8080` → container `80`, on the assumption
 this VPS might run other sites behind a shared reverse proxy. Two ways to go from here:
 
 - **Only site on the box:** change the mapping to `"80:80"` (and `"443:443"` once you add TLS).
