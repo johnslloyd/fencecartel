@@ -481,7 +481,7 @@ p { margin: 0 0 1em; color: var(--color-text-muted); }
   .footer-logo-mark { height: 90px; }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 900px) {
   .hero { min-height: 560px; padding-bottom: 40px; }
   .hero-meta-row { flex-direction: column; align-items: flex-start; }
   .hero-copy { max-width: none; }
